@@ -78,7 +78,7 @@ const Categoryform = ({
       {!isEditing && (
         <p
           className={cn(
-            'text-sm mt-2',
+            'text-sm mt-2 bg-slate-800  text-center text-slate-200 w-2/4 rounded-md  p-2',
             !initialData.categoryId && 'text-slate-500  italic',
           )}
         >
