@@ -3,12 +3,13 @@ import { auth } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 import { boolean } from 'zod'
 import { IconBadge } from '@/components/icons-badge'
-import { CircleDollarSign, LayoutDashboard, ListChecks } from 'lucide-react'
+import { CircleDollarSign, File, LayoutDashboard, ListChecks } from 'lucide-react'
 import Titleform from '../_components/Titleform'
 import Descriptionform from '../_components/Descriptionform'
 import Imageform from '../_components/Imageform'
 import Categoryform from '../_components/Categoryform'
 import Priceform from '../_components/Priceform'
+import Attachmentform from '../_components/Attachmentform'
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth()
@@ -20,6 +21,13 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     where: {
       id: params.courseId,
     },
+    include:{
+      attachments:{
+        orderBy:{
+          createdAt:"desc"
+        }
+      }
+    }
   })
 
   const categories = await db.category.findMany({
@@ -85,8 +93,15 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             <IconBadge icon={CircleDollarSign} />
             <h2 className="text-xl">Sell your course</h2>
           </div>
-          <Priceform initialData={course}
-          courseId={course.id}/>
+          <Priceform initialData={course} courseId={course.id} />
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={File} />
+              <h2 className="text-xl">Resources & Attachments</h2>
+            </div>
+            <Attachmentform initialData={course} courseId={course.id} />
+
+          </div>
         </div>
       </div>
     </div>
