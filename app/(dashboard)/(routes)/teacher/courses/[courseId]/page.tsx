@@ -7,6 +7,7 @@ import { LayoutDashboard } from 'lucide-react'
 import Titleform from '../_components/Titleform'
 import Descriptionform from '../_components/Descriptionform'
 import Imageform from '../_components/Imageform'
+import Categoryform from '../_components/Categoryform'
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth()
@@ -19,6 +20,13 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       id: params.courseId,
     },
   })
+
+  const categories = await db.category.findMany({
+    orderBy: {
+      name: 'asc',
+    },
+  })
+
   if (!course) {
     return redirect('/')
   }
@@ -54,6 +62,14 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             <Titleform initialData={course} courseId={course.id} />
             <Descriptionform initialData={course} courseId={course.id} />
             <Imageform initialData={course} courseId={course.id} />
+            <Categoryform
+              initialData={course}
+              courseId={course.id}
+              options={categories.map((category) => ({
+                label: category.name,
+                value: category.id,
+              }))}
+            />
           </div>
         </div>
       </div>
