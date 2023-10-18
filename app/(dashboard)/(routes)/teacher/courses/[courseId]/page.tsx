@@ -3,11 +3,12 @@ import { auth } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 import { boolean } from 'zod'
 import { IconBadge } from '@/components/icons-badge'
-import { LayoutDashboard } from 'lucide-react'
+import { CircleDollarSign, LayoutDashboard, ListChecks } from 'lucide-react'
 import Titleform from '../_components/Titleform'
 import Descriptionform from '../_components/Descriptionform'
 import Imageform from '../_components/Imageform'
 import Categoryform from '../_components/Categoryform'
+import Priceform from '../_components/Priceform'
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth()
@@ -43,7 +44,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const completionText = `(${completedFields}/${totlaFields})`
 
   return (
-    <div className="p-6">
+    <div className="p-6 font-medium">
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-y-2">
           <h1 className="text-2xl font-medium">Course Setup</h1>
@@ -56,7 +57,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
         <div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={LayoutDashboard} />
-            <h2 className="text-xl font-medium">Customize your course</h2>
+            <h2 className="text-xl ">Customize your course</h2>
           </div>
           <div>
             <Titleform initialData={course} courseId={course.id} />
@@ -71,6 +72,21 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               }))}
             />
           </div>
+        </div>
+        <div className="space-y-6">
+          <div>
+            <div className="flex items-center gap-x-2">
+              <IconBadge icon={ListChecks} />
+              <h2 className="text-xl ">Course Chapters</h2>
+            </div>
+            <div>TODO:Chapters</div>
+          </div>
+          <div className="flex items-center gap-x-2">
+            <IconBadge icon={CircleDollarSign} />
+            <h2 className="text-xl">Sell your course</h2>
+          </div>
+          <Priceform initialData={course}
+          courseId={course.id}/>
         </div>
       </div>
     </div>
