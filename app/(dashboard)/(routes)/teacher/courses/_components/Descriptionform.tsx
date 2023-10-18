@@ -18,11 +18,11 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { cn } from '@/lib/utils'
 import { Textarea } from '@/components/ui/textarea'
+import { Course } from '@prisma/client'
+import { describe } from 'node:test'
 
 interface DescriptionformProps {
-  initialData: {
-    description: string
-  }
+  initialData: Course
   courseId: string
 }
 const formSchema = z.object({
@@ -36,7 +36,7 @@ const Descriptionform = ({ initialData, courseId }: DescriptionformProps) => {
   const toggleEdit = () => setIsEditing((e) => !e)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: { description: initialData?.description || '' },
   })
 
   const { isSubmitting, isValid } = form.formState
