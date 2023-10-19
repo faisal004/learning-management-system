@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 
 import Chaptertitleform from './_components/Chaptertitleform'
+import Chapterdescriptionform from './_components/Chapterdescriptionform'
 
 const ChapterId = async ({
   params,
@@ -65,6 +66,11 @@ const ChapterId = async ({
               initialData={chapter}
               courseId={params.courseId}
               chapterId={params.chapterId}
+            />
+            <Chapterdescriptionform
+            initialData={chapter}
+            courseId={params.courseId}
+            chapterId={params.chapterId}
             />
           </div>
         </div>
