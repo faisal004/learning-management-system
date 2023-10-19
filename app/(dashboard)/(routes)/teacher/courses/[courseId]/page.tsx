@@ -10,6 +10,7 @@ import Imageform from '../_components/Imageform'
 import Categoryform from '../_components/Categoryform'
 import Priceform from '../_components/Priceform'
 import Attachmentform from '../_components/Attachmentform'
+import Chapterform from '../_components/Chapterform'
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth()
@@ -20,8 +21,14 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const course = await db.course.findUnique({
     where: {
       id: params.courseId,
+      userId
     },
     include:{
+      chapters:{
+        orderBy:{
+          position:"asc"
+        },
+      },
       attachments:{
         orderBy:{
           createdAt:"desc"
@@ -46,6 +53,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     course.imageUrl,
     course.price,
     course.categoryId,
+    course.chapters.some(chapter=>chapter.isPublished)
   ]
   const totlaFields = requiredFields.length
   const completedFields = requiredFields.filter(Boolean).length
@@ -87,7 +95,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               <IconBadge icon={ListChecks} />
               <h2 className="text-xl ">Course Chapters</h2>
             </div>
-            <div>TODO:Chapters</div>
+            <Chapterform initialData={course} courseId={course.id} />
           </div>
           <div className="flex items-center gap-x-2">
             <IconBadge icon={CircleDollarSign} />
