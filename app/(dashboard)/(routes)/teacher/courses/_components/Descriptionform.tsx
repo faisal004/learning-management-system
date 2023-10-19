@@ -44,7 +44,7 @@ const Descriptionform = ({ initialData, courseId }: DescriptionformProps) => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values)
-      toast.success('Course Description Updated')
+      toast.success(' Description Updated')
       toggleEdit()
       router.refresh()
     } catch (error) {
