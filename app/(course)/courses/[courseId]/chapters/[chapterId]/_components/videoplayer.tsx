@@ -40,7 +40,9 @@ export const VideoPlayer = ({
           isCompleted: true,
         });
 
-    
+    if(!nextChapterId){
+      toast.success("Completed")
+    }
         toast.success("Progress updated");
         router.refresh();
 
