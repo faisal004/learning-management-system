@@ -31,6 +31,7 @@ yarn install
 ```
 
 Set up .env file
+Also you have to make account on [mux.com](https://www.mux.com) to get mux tokeniD and Secret
 ```bash
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
